@@ -12,7 +12,7 @@ return {
       require "configs.lspconfig"
     end,
   },
-  
+
   {
    "williamboman/mason.nvim",
    opts = {
@@ -24,10 +24,35 @@ return {
       "prettier",
       "gopls",
       "ts_ls",
-      "vuels",
       "volar"
     },
    },
+  },
+
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      require "configs.autoclose"
+    end,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require("nvim-ts-autotag").setup({
+        autotag = {
+          enable = true,
+          enable_rename = true,
+          enable_close = true,
+          enable_close_on_slash = true,
+          filetypes = {
+            'html', 'javascript', 'typescript', 'javascriptreact',
+            'typescriptreact', 'vue', 'tsx', 'jsx', 'xml',
+          },
+        }
+      })
+    end,
   },
 
   -- {
