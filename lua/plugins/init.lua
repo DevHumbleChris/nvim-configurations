@@ -55,6 +55,43 @@ return {
     end,
   },
 
+  {
+  "kevinhwang91/nvim-ufo",
+  dependencies = {
+    "kevinhwang91/promise-async",
+    {
+      "luukvbaal/statuscol.nvim",
+      config = function()
+        local builtin = require("statuscol.builtin")
+        require("statuscol").setup({
+          segments = {
+            { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+            { text = { "%s" }, click = "v:lua.ScSa" },
+            { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+          },
+        })
+      end,
+    },
+  },
+  event = "BufRead",
+  config = function()
+    vim.opt.foldcolumn = "1"
+    vim.opt.foldlevel = 99
+    vim.opt.foldlevelstart = 99
+    vim.opt.foldenable = true
+    
+    require("ufo").setup({
+      provider_selector = function()
+        return { "treesitter", "indent" }
+      end
+    })
+
+    -- Using ufo provider need remap `zR` and `zM`
+    vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+    vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+  end
+}
+
   -- {
   -- 	"nvim-treesitter/nvim-treesitter",
   -- 	opts = {
